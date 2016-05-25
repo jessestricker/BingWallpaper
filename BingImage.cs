@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -10,7 +11,7 @@ namespace BingWallpaper
     [SuppressMessage("ReSharper", "LocalizableElement")]
     internal class BingImage
     {
-        private const string RequestUrl = "http://www.bing.com/HPImageArchive.aspx?format=xml&idx={0}&n=1&mkt=de-DE";
+        private const string RequestUrl = "http://www.bing.com/HPImageArchive.aspx?format=xml&idx={0}&n=1&mkt={1}";
         private static readonly WebClient WebClient = new WebClient();
 
         private readonly string _url;
@@ -49,7 +50,8 @@ namespace BingWallpaper
             string xml;
             try
             {
-                xml = WebClient.DownloadString(string.Format(RequestUrl, dayOffset));
+                var langCode = CultureInfo.CurrentUICulture.Name;
+                xml = WebClient.DownloadString(string.Format(RequestUrl, dayOffset, langCode));
             }
             catch (Exception)
             {
