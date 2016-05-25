@@ -74,6 +74,10 @@
     <Compile Include="StaticExtensionMethods.cs" />
     <Compile Include="StringUtil.cs" />
     <Compile Include="NativeMethods.cs" />
+    <EmbeddedResource Include="Properties\Resources.de.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
