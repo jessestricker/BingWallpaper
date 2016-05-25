@@ -69,5 +69,32 @@ namespace BingWallpaper.Properties {
                 return ((System.Drawing.Icon)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next Wallpaper.
+        /// </summary>
+        internal static string Program_Program_Next_Wallpaper {
+            get {
+                return ResourceManager.GetString("Program_Program_Next_Wallpaper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Previous Wallpaper.
+        /// </summary>
+        internal static string Program_Program_Previous_Wallpapaper {
+            get {
+                return ResourceManager.GetString("Program_Program_Previous_Wallpapaper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Index.
+        /// </summary>
+        internal static string Program_UseImage_Index {
+            get {
+                return ResourceManager.GetString("Program_UseImage_Index", resourceCulture);
+            }
+        }
     }
 }

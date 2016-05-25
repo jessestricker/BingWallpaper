@@ -55,8 +55,8 @@ namespace BingWallpaper
                         (_currentImageLabel = new ToolStripLabel()),
                         (_currentIndexLabel = new ToolStripLabel()),
                         new ToolStripSeparator(),
-                        new ToolStripButton("Vorheriges Bild", null, OnPreviousImageClick),
-                        new ToolStripButton("Nächstes Bild", null, OnNextImageClick)
+                        new ToolStripButton(Resources.Program_Program_Previous_Wallpapaper, null, OnPreviousImageClick),
+                        new ToolStripButton(Resources.Program_Program_Next_Wallpaper, null, OnNextImageClick)
                     }
                 }
             };
@@ -89,7 +89,7 @@ namespace BingWallpaper
 
             var wrappedText = image.Description.WordWrap(50);
             _currentImageLabel.Text = wrappedText;
-            _currentIndexLabel.Text = "Bildindex: " + (_imageOffset + 2) + " / 14";
+            _currentIndexLabel.Text = Resources.Program_UseImage_Index + ": " + (_imageOffset + 2) + " / 14";
         }
 
         private void OnPreviousImageClick(object sender, EventArgs eventArgs)
