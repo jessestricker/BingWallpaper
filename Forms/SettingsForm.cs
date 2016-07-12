@@ -1,12 +1,20 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.IO;
 using System.Windows.Forms;
 
 namespace BingWallpaper.Forms
 {
     public partial class SettingsForm : Form
     {
-        private static readonly string ExecutablePath = AssemblyUtil.ExecutablePath();
+        private static string GetExecutablePath()
+        {
+            var uri = new Uri(AssemblyUtil.ExecutablePath());
+            var path = uri.LocalPath + Uri.UnescapeDataString(uri.Fragment);
+            return Path.GetFullPath(path);
+        }
+
+        private static readonly string ExecutablePath = GetExecutablePath();
         private static RegistryKey OpenRunRegistryKey() => Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run");
 
         private static bool IsRunAtStart()
