@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?define ProductName="Bing Wallpaper"?>
+<?define ProductManufacturer="Jesse Stricker"?>
+<?define ProductVersion="1.1.1"?>
+<?define ProductUpgradeCode="99c69be2-6b42-4ee3-9f03-62f08cd6ff8c"?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*" Name="$(var.ProductName)" Version="$(var.ProductVersion)" Manufacturer="$(var.ProductManufacturer)"
+           UpgradeCode="$(var.ProductUpgradeCode)" Language="1033">
+    <Package InstallerVersion="200" Compressed="yes" />
+    <Media Id="1" Cabinet="product.cab" EmbedCab="yes" />
+
+    <!-- Icon & Program Entry -->
+    <Icon Id="ProductIcon" SourceFile="$(var.BingWallpaper.ProjectDir)Resources/Icon.ico" />
+    <Property Id="ARPPRODUCTICON" Value="ProductIcon" />
+    <Property Id="ARPNOREPAIR" Value="1" />
+    <Property Id="ARPNOMODIFY" Value="1" />
+
+    <!-- Upgrade Behaviour -->
+    <Upgrade Id="$(var.ProductUpgradeCode)">
+      <UpgradeVersion Minimum="$(var.ProductVersion)" OnlyDetect="yes" Property="NEWERVERSIONDETECTED" />
+      <UpgradeVersion Minimum="0.0.0" Maximum="$(var.ProductVersion)" IncludeMinimum="yes" IncludeMaximum="no"
+                      Property="OLDERVERSIONBEINGUPGRADED"/>
+    </Upgrade>
+    <Condition Message="A newer version of this software is already installed.">NOT NEWERVERSIONDETECTED</Condition>
+
+    <!-- Files -->
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <!-- Executable -->
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLDIR" Name="$(var.ProductName)">
+          <Component Id="ApplicationFiles" Guid="70DA1D50-5C8F-4AD4-83F2-26B795593968">
+            <File Id="ApplicationFile1" Source="$(var.BingWallpaper.TargetDir)/$(var.ProductName).exe" />
+          </Component>
+        </Directory>
+      </Directory>
+
+      <!-- Shortcut -->
+      <Directory Id="ProgramMenuFolder">
+        <Component Id="ApplicationShortcuts" Guid="3E8FFCA8-438C-4C4C-9F14-1C6B10ED7355">
+          <Shortcut Id="ApplicationShortcut1" Name="$(var.ProductName)"
+                    Target="[INSTALLDIR]$(var.ProductName).exe" WorkingDirectory="INSTALLDIR" />
+          <RegistryValue Root="HKCU" Key="Software\$(var.ProductManufacturer)\$(var.ProductName)"
+                    Name="installed" Type="integer" Value="1" KeyPath="yes" />
+          <RemoveFile Id="ProgramMenuFolder" Name="$(var.ProductName)" On="uninstall" />
+        </Component>
+      </Directory>
+    </Directory>
+
+    <InstallExecuteSequence>
+      <RemoveExistingProducts After="InstallValidate" />
+    </InstallExecuteSequence>
+
+    <Feature Id="DefaultFeature" Level="1">
+      <ComponentRef Id="ApplicationFiles" />
+      <ComponentRef Id="ApplicationShortcuts" />
+    </Feature>
+  </Product>
+</Wix>
