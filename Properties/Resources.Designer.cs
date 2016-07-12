@@ -71,6 +71,15 @@ namespace BingWallpaper.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exit.
+        /// </summary>
+        internal static string Program_Program_Exit {
+            get {
+                return ResourceManager.GetString("Program_Program_Exit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Next Wallpaper.
         /// </summary>
         internal static string Program_Program_Next_Wallpaper {

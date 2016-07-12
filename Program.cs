@@ -40,7 +40,9 @@ namespace BingWallpaper
                         (_currentIndexLabel = new ToolStripLabel()),
                         new ToolStripSeparator(),
                         new ToolStripButton(Resources.Program_Program_Previous_Wallpapaper, null, OnPreviousImageClick),
-                        new ToolStripButton(Resources.Program_Program_Next_Wallpaper, null, OnNextImageClick)
+                        new ToolStripButton(Resources.Program_Program_Next_Wallpaper, null, OnNextImageClick),
+                        new ToolStripSeparator(),
+                        new ToolStripButton(Resources.Program_Program_Exit, null, OnCloseButtonClick)
                     }
                 }
             };
@@ -53,6 +55,11 @@ namespace BingWallpaper
             // start watching
             _watchThread = new Thread(WatchThread);
             _watchThread.Start();
+        }
+
+        private void OnCloseButtonClick(object sender, EventArgs e)
+        {
+            ExitThread();
         }
 
         private void ChangeImage(int newOffset)

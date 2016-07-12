@@ -130,4 +130,7 @@
   <data name="Program_UseImage_Index" xml:space="preserve">
     <value>Index</value>
   </data>
+  <data name="Program_Program_Exit" xml:space="preserve">
+    <value>Beenden</value>
+  </data>
 </root>
