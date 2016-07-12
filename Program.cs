@@ -2,34 +2,18 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using BingWallpaper.Properties;
-using Microsoft.Win32;
 
 namespace BingWallpaper
 {
-    [SuppressMessage("ReSharper", "LocalizableElement")]
     internal class Program : ApplicationContext
     {
         private static readonly string ImageFile =
             Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),
                 AssemblyUtil.ProductName(), "Wallpaper.jpg");
-
-        private static readonly string InstallationFolder =
-            Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),
-                AssemblyUtil.CompanyName(), AssemblyUtil.ProductName());
-
-        private static readonly string InstallationExecutablePath =
-            Path.ChangeExtension(
-                Path.Combine(InstallationFolder, AssemblyUtil.ProductName()),
-                "exe");
-
-        private static readonly RegistryKey RunAtStartupRegistryKey =
-            Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run");
 
         private static readonly Mutex SiMutex = new Mutex(true, "68592096-BFAB-46DB-9B7F-DE977678D85E");
 
@@ -131,13 +115,6 @@ namespace BingWallpaper
         [STAThread]
         private static void Main()
         {
-            if (Environment.GetCommandLineArgs().Contains("--uninstall"))
-            {
-                Uninstall();
-                return;
-            }
-
-
             // allow only one instance if not debugging
 #if !DEBUG
             if (!SiMutex.WaitOne(TimeSpan.Zero, true))
@@ -147,84 +124,12 @@ namespace BingWallpaper
             }
 #endif
 
-            if (!Install())
-                return;
-
             // run program
             Application.Run(new Program());
 
 #if !DEBUG
             SiMutex.ReleaseMutex();
 #endif
-        }
-
-        private static bool Install()
-        {
-            if (Environment.GetCommandLineArgs().Contains("--no-install"))
-                return true;
-
-            var forceInstall = Environment.GetCommandLineArgs().Contains("--install");
-            var registryRunValue = RunAtStartupRegistryKey.GetValue(AssemblyUtil.ProductName()) as string;
-
-            if (!forceInstall && File.Exists(InstallationExecutablePath) &&
-                registryRunValue == InstallationExecutablePath)
-                return true;
-
-            // install
-            Console.Write("Installing...");
-            try
-            {
-                // create installation folder
-                Directory.CreateDirectory(InstallationFolder);
-                File.Copy(Application.ExecutablePath, InstallationExecutablePath, true);
-
-                // set up 'run on login'
-                RunAtStartupRegistryKey.SetValue(AssemblyUtil.ProductName(), InstallationExecutablePath);
-
-                Console.WriteLine("Success");
-                return true;
-            }
-            catch (Exception e)
-            {
-                var message = "Failed to install!\n\n" + e.Message;
-
-                if (e is UnauthorizedAccessException)
-                {
-                    message += "\n\nRestart this program as an administrator to install!";
-                }
-
-                MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                Console.WriteLine("Failed, see MessageBox");
-                return false;
-            }
-        }
-
-        private static void Uninstall()
-        {
-            Console.Write("Uninstalling...");
-
-            try
-            {
-                RunAtStartupRegistryKey.DeleteValue(AssemblyUtil.ProductName(), false);
-                Directory.Delete(InstallationFolder, true);
-
-                Console.WriteLine("Success");
-            }
-            catch (Exception e)
-            {
-                var message = "Failed to uninstall!\n\n" + e.Message;
-
-                if (e is UnauthorizedAccessException)
-                {
-                    message += "\n\nRestart this program as an administrator to uninstall!";
-                }
-
-                MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-                Console.WriteLine("Failed, restart as administrator");
-            }
-
-            Console.WriteLine("Quitting!");
         }
     }
 }
