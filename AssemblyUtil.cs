@@ -11,5 +11,8 @@ namespace BingWallpaper
 
         public static string CompanyName(Assembly assembly = null)
             => (assembly ?? CurrentAssembly).GetCustomAttribute<AssemblyCompanyAttribute>().Company;
+
+        public static string ExecutablePath(Assembly assembly = null)
+            => (assembly ?? CurrentAssembly).CodeBase;
     }
 }

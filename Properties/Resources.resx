@@ -133,4 +133,7 @@
   <data name="Program_Program_Exit" xml:space="preserve">
     <value>Exit</value>
   </data>
+  <data name="Program_Program_Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
 </root>

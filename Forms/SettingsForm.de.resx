@@ -117,23 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\icon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ButtonCancel.Text" xml:space="preserve">
+    <value>Abbrechen</value>
   </data>
-  <data name="Program_Program_Previous_Wallpapaper" xml:space="preserve">
-    <value>Letzter Hintergrund</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="CheckBoxStartWithWindows.Size" type="System.Drawing.Size, System.Drawing">
+    <value>196, 17</value>
   </data>
-  <data name="Program_Program_Next_Wallpaper" xml:space="preserve">
-    <value>Nächster Hintergrund</value>
+  <data name="CheckBoxStartWithWindows.Text" xml:space="preserve">
+    <value>Bing Wallpaper mit Windows starten</value>
   </data>
-  <data name="Program_UseImage_Index" xml:space="preserve">
-    <value>Index</value>
-  </data>
-  <data name="Program_Program_Exit" xml:space="preserve">
-    <value>Beenden</value>
-  </data>
-  <data name="Program_Program_Settings" xml:space="preserve">
+  <data name="$this.Text" xml:space="preserve">
     <value>Einstellungen</value>
   </data>
 </root>

@@ -98,6 +98,15 @@ namespace BingWallpaper.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        internal static string Program_Program_Settings {
+            get {
+                return ResourceManager.GetString("Program_Program_Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Index.
         /// </summary>
         internal static string Program_UseImage_Index {

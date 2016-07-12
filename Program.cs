@@ -5,6 +5,7 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using BingWallpaper.Properties;
+using BingWallpaper.Forms;
 
 namespace BingWallpaper
 {
@@ -22,6 +23,7 @@ namespace BingWallpaper
         private readonly Thread _watchThread;
 
         private int _imageOffset = -1;
+        private Form _settingsForm;
 
         private Program()
         {
@@ -42,6 +44,7 @@ namespace BingWallpaper
                         new ToolStripButton(Resources.Program_Program_Previous_Wallpapaper, null, OnPreviousImageClick),
                         new ToolStripButton(Resources.Program_Program_Next_Wallpaper, null, OnNextImageClick),
                         new ToolStripSeparator(),
+                        new ToolStripButton(Resources.Program_Program_Settings, null, OnSettingsButtonClick),
                         new ToolStripButton(Resources.Program_Program_Exit, null, OnCloseButtonClick)
                     }
                 }
@@ -55,6 +58,21 @@ namespace BingWallpaper
             // start watching
             _watchThread = new Thread(WatchThread);
             _watchThread.Start();
+        }
+
+        private void OnSettingsButtonClick(object sender, EventArgs e)
+        {
+            if (_settingsForm == null || _settingsForm.IsDisposed)
+            {
+                // settings form invalid, create new one and show it
+                _settingsForm = new SettingsForm();
+                _settingsForm.Show();
+            }
+            else
+            {
+                // valid form opened, bring it back to front
+                _settingsForm.Focus();
+            }
         }
 
         private void OnCloseButtonClick(object sender, EventArgs e)
@@ -130,6 +148,8 @@ namespace BingWallpaper
                 return;
             }
 #endif
+
+            Application.EnableVisualStyles();
 
             // run program
             Application.Run(new Program());
