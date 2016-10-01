@@ -26,6 +26,7 @@ Name: "german"; MessagesFile: "compiler:Languages\German.isl"
 
 [Files]
 Source: "bin\Release\Bing Wallpaper.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "bin\Release\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "bin\Release\de\*"; DestDir: "{app}\de"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
