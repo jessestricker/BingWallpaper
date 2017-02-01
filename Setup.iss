@@ -1,5 +1,5 @@
 #define MyAppName "Bing Wallpaper"
-#define MyAppVersion "1.2.0"
+#define MyAppVersion "1.2.1"
 #define MyAppPublisher "Jesse Stricker"
 #define MyAppURL "https://github.com/jessestricker/BingWallpaper"
 #define MyAppExeName "Bing Wallpaper.exe"
