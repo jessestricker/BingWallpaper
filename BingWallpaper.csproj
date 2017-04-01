@@ -90,6 +90,7 @@
     <Compile Include="StaticExtensionMethods.cs" />
     <Compile Include="StringUtil.cs" />
     <Compile Include="NativeMethods.cs" />
+    <Compile Include="Watcher.cs" />
     <EmbeddedResource Include="Forms\SettingsForm.de.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>

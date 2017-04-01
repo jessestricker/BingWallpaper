@@ -12,7 +12,7 @@ namespace BingWallpaper
     internal class BingImage
     {
         private const string RequestUrl = "http://www.bing.com/HPImageArchive.aspx?format=js&idx={0}&n=1&mkt={1}";
-        private static readonly WebClient WebClient = new WebClient {Encoding = Encoding.UTF8};
+        private static readonly WebClient WebClient = new WebClient { Encoding = Encoding.UTF8 };
 
         private readonly string _url;
 
@@ -44,7 +44,7 @@ namespace BingWallpaper
             }
         }
 
-        public static BingImage GetFromWeb(int dayOffset = -1)
+        public static BingImage GetFromWeb(int dayOffset = 0)
         {
             try
             {
@@ -52,12 +52,12 @@ namespace BingWallpaper
                 var json = JObject.Parse(WebClient.DownloadString(string.Format(RequestUrl, dayOffset, langCode)));
                 var image = json["images"][0];
 
-                var dateString = (string) image["startdate"];
+                var dateString = (string)image["startdate"];
                 int date;
                 if (!int.TryParse(dateString, out date)) return null;
 
-                var url = "https://bing.com/" + ((bool) image["wp"] ? "hpwp/" + image["hsh"] : image["url"]);
-                var copyright = (string) image["copyright"] ?? "";
+                var url = "https://bing.com/" + ((bool)image["wp"] ? "hpwp/" + image["hsh"] : image["url"]);
+                var copyright = (string)image["copyright"] ?? "";
                 return new BingImage(url, copyright, date);
             }
             catch (Exception)

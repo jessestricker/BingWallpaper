@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using System.Windows.Forms;
+using System;
 
 namespace BingWallpaper
 {
@@ -13,10 +14,13 @@ namespace BingWallpaper
             NotifyIconShowContextMenuMethod.Invoke(notifyIcon, null);
         }
 
-        public static int Marquee(this int i, int beg, int end)
+        public static int Marquee(this int i, int lowerBound, int upperBound)
         {
-            if (i > end) i = beg;
-            else if (i < beg) i = end;
+            if (upperBound < lowerBound) throw new ArgumentException("must be greater than " + nameof(lowerBound), nameof(upperBound));
+
+            if (i < lowerBound) return upperBound;
+            if (i > upperBound) return lowerBound;
+
             return i;
         }
     }
