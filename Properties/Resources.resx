@@ -128,7 +128,7 @@
     <value>Next Wallpaper</value>
   </data>
   <data name="Program_UseImage_Index" xml:space="preserve">
-    <value>Index</value>
+    <value>Index: {0} / 14</value>
   </data>
   <data name="Program_Program_Exit" xml:space="preserve">
     <value>Exit</value>

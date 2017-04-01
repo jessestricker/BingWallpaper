@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCopyright("Copyright © 2016 Jesse Stricker")]
 [assembly: AssemblyDescription("Bing Wallpaper downloads the current image from bing.com to show as the desktop background image.")]
 [assembly: ComVisible(false)]
-[assembly: AssemblyVersion("1.3.2")]
+[assembly: AssemblyVersion("1.3.3")]
 
 #if DEBUG
 [assembly: AssemblyConfiguration("Debug")]
