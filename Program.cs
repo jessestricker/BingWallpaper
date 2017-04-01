@@ -22,7 +22,7 @@ namespace BingWallpaper
         private readonly NotifyIcon _notifyIcon;
         private readonly Thread _watchThread;
 
-        private int _imageOffset = -1;
+        private int _imageOffset = 0;
         private Form _settingsForm;
 
         private Program()
@@ -82,7 +82,7 @@ namespace BingWallpaper
 
         private void ChangeImage(int newOffset)
         {
-            _imageOffset = newOffset.Marquee(-1, 12);
+            _imageOffset = newOffset.Marquee(0, 13);
 
             var img = BingImage.GetFromWeb(_imageOffset);
             if (img != null)
@@ -98,7 +98,7 @@ namespace BingWallpaper
 
             var wrappedText = image.Description.WordWrap(50);
             _currentImageLabel.Text = wrappedText;
-            _currentIndexLabel.Text = Resources.Program_UseImage_Index + ": " + (_imageOffset + 2) + " / 14";
+            _currentIndexLabel.Text = Resources.Program_UseImage_Index + ": " + (_imageOffset + 1) + " / 14";
         }
 
         private void OnPreviousImageClick(object sender, EventArgs eventArgs)
@@ -123,7 +123,7 @@ namespace BingWallpaper
             BingImage currentImage = null;
             while (true)
             {
-                var newImage = BingImage.GetFromWeb();
+                var newImage = BingImage.GetFromWeb(0);
 
                 if (newImage != null &&
                     (currentImage == null || newImage.Date > currentImage.Date))

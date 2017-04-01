@@ -44,7 +44,7 @@ namespace BingWallpaper
             }
         }
 
-        public static BingImage GetFromWeb(int dayOffset = -1)
+        public static BingImage GetFromWeb(int dayOffset)
         {
             try
             {
