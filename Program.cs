@@ -11,14 +11,18 @@ namespace BingWallpaper
 {
     internal class Program : ApplicationContext
     {
+        private static readonly string ImageFile =
+            Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),
+                AssemblyUtil.ProductName(), "Wallpaper.jpg");
+
         private static readonly Mutex SiMutex = new Mutex(true, "68592096-BFAB-46DB-9B7F-DE977678D85E");
 
         private readonly ToolStripLabel _currentImageLabel, _currentIndexLabel;
         private readonly NotifyIcon _notifyIcon;
-
         private readonly Thread _watchThread;
-        private readonly Watcher _watcher;
 
+        private int _imageOffset = -1;
         private Form _settingsForm;
 
         private Program()
@@ -52,7 +56,6 @@ namespace BingWallpaper
             _notifyIcon.Click += (sender, args) => _notifyIcon.ShowContextMenu();
 
             // start watching
-            _watcher = new Watcher((v) => { _currentImageLabel.Text = v; }, (v) => { _currentIndexLabel.Text = v; });
             _watchThread = new Thread(WatchThread);
             _watchThread.Start();
         }
@@ -77,14 +80,35 @@ namespace BingWallpaper
             ExitThread();
         }
 
+        private void ChangeImage(int newOffset)
+        {
+            _imageOffset = newOffset.Marquee(-1, 12);
+
+            var img = BingImage.GetFromWeb(_imageOffset);
+            if (img != null)
+                UseImage(img);
+        }
+
+        private void UseImage(BingImage image)
+        {
+            image.WriteTo(ImageFile);
+
+            if (!NativeMethods.SetWallpaper(ImageFile))
+                return;
+
+            var wrappedText = image.Description.WordWrap(50);
+            _currentImageLabel.Text = wrappedText;
+            _currentIndexLabel.Text = Resources.Program_UseImage_Index + ": " + (_imageOffset + 2) + " / 14";
+        }
+
         private void OnPreviousImageClick(object sender, EventArgs eventArgs)
         {
-            _watcher.ChangeImage(_watcher.ImageOffset + 1);
+            ChangeImage(_imageOffset + 1);
         }
 
         private void OnNextImageClick(object sender, EventArgs eventArgs)
         {
-            _watcher.ChangeImage(_watcher.ImageOffset - 1);
+            ChangeImage(_imageOffset - 1);
         }
 
         private void OnProgramExit(object sender, EventArgs eventArgs)
@@ -96,9 +120,19 @@ namespace BingWallpaper
         [SuppressMessage("ReSharper", "FunctionNeverReturns")]
         private void WatchThread()
         {
+            BingImage currentImage = null;
             while (true)
             {
-                _watcher.Tick();
+                var newImage = BingImage.GetFromWeb();
+
+                if (newImage != null &&
+                    (currentImage == null || newImage.Date > currentImage.Date))
+                {
+                    currentImage = newImage;
+                    _imageOffset = -1;
+                    UseImage(currentImage);
+                }
+
                 Thread.Sleep(TimeSpan.FromMinutes(30));
             }
         }
