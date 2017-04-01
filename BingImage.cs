@@ -12,18 +12,9 @@ namespace BingWallpaper
     internal class BingImage
     {
         private const string RequestUrl = "http://www.bing.com/HPImageArchive.aspx?format=js&idx={0}&n=1&mkt={1}";
-
-        private static readonly WebClient WebClient = new WebClient
-        {
-            Encoding = Encoding.UTF8,
-            UseDefaultCredentials = true,
-            Proxy = WebRequest.GetSystemWebProxy()
-        };
+        private static readonly WebClient WebClient = new WebClient {Encoding = Encoding.UTF8};
 
         private readonly string _url;
-
-        public string Description { get; }
-        public int Date { get; }
 
         private BingImage(string url, string description, int date)
         {
@@ -31,6 +22,9 @@ namespace BingWallpaper
             Description = description;
             Date = date;
         }
+
+        public string Description { get; }
+        public int Date { get; }
 
         public void WriteTo(string fileName)
         {
